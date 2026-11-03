@@ -331,7 +331,7 @@ footer {
           </div>
         </div>
 
-        <form id="contact-form" action="https://formsubmit.co/bbvd10@gmail.com" method="POST">
+        <form id="contact-form" action="https://formsubmit.co/ajax/bbvd10@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="Nueva consulta desde yuriduchefotografia.com.ar">
           <input type="hidden" name="_template" value="table">
           <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
@@ -361,6 +361,7 @@ footer {
             <textarea id="f-mensaje" name="mensaje" required></textarea>
           </div>
           <button class="btn" type="submit">Enviar consulta</button>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </section>
@@ -383,4 +384,34 @@ document.querySelectorAll("[data-copy]").forEach(function (b) {
     } catch (e) {}
   });
 });
+
+(function () {
+  var form = document.getElementById("contact-form");
+  var status = document.getElementById("status");
+  var btn = form.querySelector('button[type="submit"]');
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nombre = form.nombre.value.trim();
+    var email = form.email.value.trim();
+    var mensaje = form.mensaje.value.trim();
+    if (!nombre || !email || !mensaje) {
+      status.textContent = "Completá nombre, email y mensaje para enviar.";
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = "Enviando...";
+    fetch(form.action, { method: "POST", headers: { "Accept": "application/json" }, body: new FormData(form) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok || res.d.success === false) throw new Error("fail");
+        form.reset();
+        status.textContent = "¡Gracias! Recibí tu consulta y te responde Yuri a la brevedad.";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      })
+      .catch(function () {
+        status.textContent = "No pudimos enviar la consulta. Probá de nuevo o escribinos por WhatsApp.";
+      })
+      .then(function () { btn.disabled = false; });
+  });
+})();
 </script>
