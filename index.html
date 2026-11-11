@@ -110,11 +110,33 @@ section { padding-block: clamp(72px, 10vw, 120px); }
 .gal-title { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
 .gal-title h3 { font-size: clamp(30px, 3.6vw, 42px); }
 .gal-title span { color: var(--muted); font-size: 14px; }
-.gallery { columns: 2 220px; column-gap: 16px; }
-.gallery figure { margin: 0 0 16px; break-inside: avoid; overflow: hidden; border-radius: 24px; background: var(--accent-soft); }
-.gallery img { width: 100%; height: auto; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
-@media (hover: hover) { .gallery figure:hover img { transform: scale(1.04); } }
-@media (prefers-reduced-motion: reduce) { .gallery img { transition: none; } }
+
+/* Álbum: 3 fotos visibles, flechas a los costados */
+.album { position: relative; }
+.track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3);
+  gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 4px 2px 6px;
+}
+.track::-webkit-scrollbar { display: none; }
+.track figure { margin: 0; scroll-snap-align: start; border-radius: 24px; overflow: hidden; aspect-ratio: 3 / 4; background: var(--accent-soft); }
+.track img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--paper); color: var(--ink); font-size: 30px; line-height: 1;
+  box-shadow: 0 8px 24px -10px rgba(14,26,43,.35); display: grid; place-items: center;
+  transition: background .2s, opacity .2s;
+}
+.arrow:hover { background: var(--accent-soft); }
+.arrow:disabled { opacity: .35; cursor: default; }
+.arrow.prev { left: -12px; }
+.arrow.next { right: -12px; }
+@media (max-width: 760px) {
+  .track { grid-auto-columns: calc((100% - 16px) / 1.6); }
+  .arrow { width: 40px; height: 40px; font-size: 26px; }
+  .arrow.prev { left: 0; } .arrow.next { right: 0; }
+}
 
 /* Sobre mí */
 .about { display: grid; gap: clamp(36px, 6vw, 80px); align-items: center; }
@@ -261,23 +283,31 @@ footer {
       </div>
       <div class="gal-group">
         <div class="gal-title"><h3>Danza</h3><span>Escenario y ensayo</span></div>
-        <div class="gallery">
-          <figure><img src="g01.jpg" alt="Escenario del Dance Project con el público de espaldas y un fotógrafo en primer plano" loading="lazy"></figure>
-          <figure><img src="g02.jpg" alt="Bailarina en zancada sobre el escenario, con guantes blancos y brazos extendidos" loading="lazy"></figure>
-          <figure><img src="g03.jpg" alt="Bailarín de jazz con brazo extendido en ensayo" loading="lazy"></figure>
-          <figure><img src="g05.jpg" alt="Bailarina en plena coreografía en un salón de ensayo" loading="lazy"></figure>
-          <figure><img src="g06.jpg" alt="Pareja de bailarines iluminada por un haz de luz" loading="lazy"></figure>
-          <figure><img src="g10.jpg" alt="Tres bailarinas con luz naranja y humo" loading="lazy"></figure>
-          <figure><img src="g11.jpg" alt="Bailarina arqueando el cuerpo hacia atrás" loading="lazy"></figure>
+        <div class="album" data-album>
+          <button class="arrow prev" type="button" aria-label="Ver fotos anteriores">&#8249;</button>
+          <div class="track">
+            <figure><img src="g01.jpg" alt="Escenario del Dance Project con el público de espaldas y un fotógrafo en primer plano" loading="lazy"></figure>
+            <figure><img src="g02.jpg" alt="Bailarina en zancada sobre el escenario, con guantes blancos y brazos extendidos" loading="lazy"></figure>
+            <figure><img src="g03.jpg" alt="Bailarín de jazz con brazo extendido en ensayo" loading="lazy"></figure>
+            <figure><img src="g05.jpg" alt="Bailarina en plena coreografía en un salón de ensayo" loading="lazy"></figure>
+            <figure><img src="g06.jpg" alt="Pareja de bailarines iluminada por un haz de luz" loading="lazy"></figure>
+            <figure><img src="g10.jpg" alt="Tres bailarinas con luz naranja y humo" loading="lazy"></figure>
+            <figure><img src="g11.jpg" alt="Bailarina arqueando el cuerpo hacia atrás" loading="lazy"></figure>
+          </div>
+          <button class="arrow next" type="button" aria-label="Ver más fotos">&#8250;</button>
         </div>
       </div>
       <div class="gal-group">
         <div class="gal-title"><h3>Books</h3><span>Retrato y estudio</span></div>
-        <div class="gallery">
-          <figure><img src="g04.jpg" alt="Retrato en blanco y negro desde arriba sobre fondo claro" loading="lazy"></figure>
-          <figure><img src="g07.jpg" alt="Silueta en blanco y negro con haz de luz detrás" loading="lazy"></figure>
-          <figure><img src="g08.jpg" alt="Retrato con las manos enmarcando el rostro, fondo oscuro" loading="lazy"></figure>
-          <figure><img src="g09.jpg" alt="Primer plano en blanco y negro de un rostro apoyado en el brazo" loading="lazy"></figure>
+        <div class="album" data-album>
+          <button class="arrow prev" type="button" aria-label="Ver fotos anteriores">&#8249;</button>
+          <div class="track">
+            <figure><img src="g04.jpg" alt="Retrato en blanco y negro desde arriba sobre fondo claro" loading="lazy"></figure>
+            <figure><img src="g07.jpg" alt="Silueta en blanco y negro con haz de luz detrás" loading="lazy"></figure>
+            <figure><img src="g08.jpg" alt="Retrato con las manos enmarcando el rostro, fondo oscuro" loading="lazy"></figure>
+            <figure><img src="g09.jpg" alt="Primer plano en blanco y negro de un rostro apoyado en el brazo" loading="lazy"></figure>
+          </div>
+          <button class="arrow next" type="button" aria-label="Ver más fotos">&#8250;</button>
         </div>
       </div>
     </section>
@@ -356,6 +386,30 @@ footer {
               <option>Otro</option>
             </select>
           </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-fecha">Fecha del evento</label>
+              <input id="f-fecha" name="fecha_evento" type="date">
+            </div>
+            <div class="field">
+              <label for="f-horario">Horario</label>
+              <input id="f-horario" name="horario" type="time">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-lugar">Lugar del evento</label>
+            <input id="f-lugar" name="lugar_evento" type="text" autocomplete="off">
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-telefono">Teléfono</label>
+              <input id="f-telefono" name="telefono" type="tel" autocomplete="tel" required>
+            </div>
+            <div class="field">
+              <label for="f-instagram">Instagram</label>
+              <input id="f-instagram" name="instagram" type="text" autocomplete="off" placeholder="@usuario">
+            </div>
+          </div>
           <div class="field">
             <label for="f-mensaje">Mensaje</label>
             <textarea id="f-mensaje" name="mensaje" required></textarea>
@@ -394,8 +448,9 @@ document.querySelectorAll("[data-copy]").forEach(function (b) {
     var nombre = form.nombre.value.trim();
     var email = form.email.value.trim();
     var mensaje = form.mensaje.value.trim();
-    if (!nombre || !email || !mensaje) {
-      status.textContent = "Completá nombre, email y mensaje para enviar.";
+    var telefono = form.telefono.value.trim();
+    if (!nombre || !email || !telefono || !mensaje) {
+      status.textContent = "Completá nombre, email, teléfono y mensaje para enviar.";
       return;
     }
     btn.disabled = true;
@@ -412,6 +467,29 @@ document.querySelectorAll("[data-copy]").forEach(function (b) {
         status.textContent = "No pudimos enviar la consulta. Probá de nuevo o escribinos por WhatsApp.";
       })
       .then(function () { btn.disabled = false; });
+  });
+})();
+
+(function () {
+  document.querySelectorAll("[data-album]").forEach(function (album) {
+    var track = album.querySelector(".track");
+    var prev = album.querySelector(".prev");
+    var next = album.querySelector(".next");
+    function step() {
+      var f = track.querySelector("figure");
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 16;
+      return f ? f.getBoundingClientRect().width + gap : track.clientWidth;
+    }
+    function update() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    }
+    prev.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: "smooth" }); });
+    next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: "smooth" }); });
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
   });
 })();
 </script>
