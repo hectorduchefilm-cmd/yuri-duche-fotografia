@@ -174,6 +174,10 @@ section { padding-block: clamp(72px, 10vw, 120px); }
 .chan .v { font-size: 18px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
 .chan a { font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
 .chan a:hover { text-decoration: underline; }
+.chan-link { text-decoration: none; color: inherit; transition: background .2s, transform .2s; }
+.chan-link:hover { background: #fbfdff; transform: translateY(-2px); }
+.cta-pill { background: var(--accent); color: #fff; border-radius: 999px; padding: 11px 18px; font: 600 14px/1 "Manrope", sans-serif; white-space: nowrap; }
+.chan-link:hover .cta-pill { background: var(--accent-deep); }
 .copy-btn {
   background: var(--accent-soft); color: var(--accent-deep); border: 0; border-radius: 999px;
   padding: 9px 16px; font: 600 13px/1 "Manrope", sans-serif; cursor: pointer; min-height: 36px;
@@ -351,13 +355,14 @@ footer {
             <h2>Hablemos de <em>tu evento</em></h2>
           </div>
           <div class="channels">
-            <div class="chan">
-              <div><div class="k">WhatsApp</div><div class="v" id="tel">+54 9 11 5229-7743</div></div>
-              <button class="copy-btn" type="button" data-copy="+54 9 11 5229-7743">Copiar número</button>
-            </div>
-            <div class="chan">
-              <div><div class="k">Instagram</div><a class="v" href="https://www.instagram.com/yuriduche/" target="_blank" rel="noopener">@yuriduche</a></div>
-            </div>
+            <a class="chan chan-link" href="https://wa.me/5491152297743" target="_blank" rel="noopener">
+              <div><div class="k">WhatsApp</div><div class="v">+54 9 11 5229-7743</div></div>
+              <span class="cta-pill">Escribir por WhatsApp</span>
+            </a>
+            <a class="chan chan-link" href="https://www.instagram.com/yuriduche/" target="_blank" rel="noopener">
+              <div><div class="k">Instagram</div><div class="v">@yuriduche</div></div>
+              <span class="cta-pill">Ver Instagram</span>
+            </a>
           </div>
         </div>
 
@@ -383,7 +388,8 @@ footer {
               <option>Deporte</option>
               <option>Book</option>
               <option>Dron</option>
-              <option>Otro</option>
+              <option>Muestras</option>
+              <option>Otros</option>
             </select>
           </div>
           <div class="row2">
